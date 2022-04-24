@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "600226777093",
+    "project_id": "android-home-app-e721d",
+    "storage_bucket": "android-home-app-e721d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600226777093:android:38d51fdfc21cac9b1eb46c",
+        "android_client_info": {
+          "package_name": "com.example.locationtester"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600226777093-9vg1cjs8fvk0ofin1d0rfrae1sn6b9bv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAgYaJhXKr3QuHJXgTHbItkzcDA7x2xTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600226777093-9vg1cjs8fvk0ofin1d0rfrae1sn6b9bv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
