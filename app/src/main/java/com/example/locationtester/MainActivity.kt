@@ -35,10 +35,12 @@ import kotlin.concurrent.schedule
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var thread : Thread
-    private val runnable = Runnable(){
+    private val runnable = Runnable{
         while(true){
             GetLocation()
+            Thread.interrupted()
             Thread.sleep(10000)
+
         }
 
     }
@@ -73,6 +75,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         updateDatabaseInfo()
         thread = Thread(runnable)
         thread.start()
+        thread.interrupt()
+
     }
 
 
