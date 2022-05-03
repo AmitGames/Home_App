@@ -9,7 +9,7 @@
     tools:context=".MainActivity"
     >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,16 +18,16 @@
             android:id="@+id/AddHouseBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-
-            android:layout_marginEnd="10dp"
+            android:layout_margin="16dp"
             android:clickable="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:contentDescription="Adds A new House"
             android:fitsSystemWindows="false"
             android:focusable="true"
             app:srcCompat="@android:drawable/ic_input_add"
             tools:ignore="HardcodedText" />
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <com.google.android.material.navigation.NavigationView
@@ -35,6 +35,8 @@
         android:layout_height="match_parent"
         app:menu="@menu/mainactivitymenu"
         android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header"
+        android:id="@+id/menuBar"
         >
 
     </com.google.android.material.navigation.NavigationView>

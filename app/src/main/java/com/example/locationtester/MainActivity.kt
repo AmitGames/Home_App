@@ -1,6 +1,7 @@
 package com.example.locationtester
 
 import android.annotation.SuppressLint
+import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -17,41 +18,42 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var auth: FirebaseAuth
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         auth = Firebase.auth
-
+        val navigationView = findViewById<NavigationView>(R.id.menuBar)
         drawerLayout = findViewById(R.id.drawer_layout)
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open,R.string.close)
+        actionBarDrawerToggle =
+            ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+        navigationView.setNavigationItemSelectedListener(this)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
+        val headerView = navigationView.getHeaderView(0)
+        val name = headerView.findViewById<TextView>(R.id.display_name_text)
+        name.text = "Welcome: ${auth.currentUser?.displayName.toString()}"
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.AddHouseBtn).setOnClickListener {
             val intent = Intent(this@MainActivity, NewHouseActivity::class.java)
             startActivity(intent)
         }
-
-
-
-
     }
 
 
@@ -65,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         if(actionBarDrawerToggle.onOptionsItemSelected(item)){
             return true
         }
+
 
         return super.onOptionsItemSelected(item)
     }
@@ -87,6 +90,7 @@ class MainActivity : AppCompatActivity() {
             user?.let{
                 for(profile in it.providerData){
                     name = profile.displayName.toString()
+
                 }
             }
 
@@ -120,5 +124,12 @@ class MainActivity : AppCompatActivity() {
     private fun writeToDB(user: String, password: String, path:String, deta:String){
 
 
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.log_out->logout()
+        }
+        return true
     }
 }

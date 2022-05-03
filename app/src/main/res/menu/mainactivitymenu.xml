@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="HardcodedText" >
+    <item
+        android:id="@+id/homes_main_btn"
+        android:icon="@drawable/ic_house_fill0_wght400_grad0_opsz24"
+        android:title="My Homes">
+        <menu>
+            <item android:id="@+id/create_new_btn"
+                android:icon="@drawable/ic_add_circle_fill0_wght400_grad0_opsz24"
+                android:title="Create New Home"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/account_btn"
+        android:icon="@drawable/ic_account_circle_fill0_wght400_grad0_opsz24"
+        android:title="My Account"
+        />
     <item
         android:id="@+id/log_out"
-        android:title="Log Out"/>
+        android:icon="@drawable/ic_logout_fill0_wght400_grad0_opsz24"
+        android:title="Log Out"
+        />
+
 </menu>
