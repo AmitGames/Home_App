@@ -10,8 +10,11 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +25,9 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
+
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,26 +35,35 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         auth = Firebase.auth
 
+        drawerLayout = findViewById(R.id.drawer_layout)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open,R.string.close)
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
-
-        findViewById<Button>(R.id.btn_get_location).setOnClickListener{
-            fetchLocation()
+        findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.AddHouseBtn).setOnClickListener {
+            val intent = Intent(this@MainActivity, NewHouseActivity::class.java)
+            startActivity(intent)
         }
 
 
+
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater : MenuInflater = menuInflater
-        inflater.inflate(R.menu.mainactivitymenu, menu)
-        return true
-    }
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        val inflater : MenuInflater = menuInflater
+//        inflater.inflate(R.menu.mainactivitymenu, menu)
+//        return true
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.logout->logout()
+        if(actionBarDrawerToggle.onOptionsItemSelected(item)){
+            return true
         }
 
         return super.onOptionsItemSelected(item)
@@ -64,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if(currentUser == null){
-            val intent = Intent(this@MainActivity, LogInSystem::class.java);
+            val intent = Intent(this@MainActivity, LogInSystem::class.java)
             startActivity(intent)
         } else{
             var name = ""
@@ -74,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                     name = profile.displayName.toString()
                 }
             }
-            findViewById<TextView>(R.id.Username).text = "Welcome: $name"
+
         }
     }
     private fun fetchLocation(){

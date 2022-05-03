@@ -8,4 +8,6 @@
     <string name="log_out">Log Out</string>
     <string name="username">Username</string>
     <string name="login">login</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

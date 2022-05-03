@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LogInSystem">
+
     <EditText
         android:id="@+id/Email1"
         android:layout_width="350dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="184dp"
         android:layout_marginBottom="502dp"
         android:autofillHints=""
@@ -24,13 +25,13 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="TextFields" />
 
     <EditText
         android:id="@+id/Password1"
         android:layout_width="350dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="432dp"
         android:autoText="false"
@@ -47,8 +48,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Email"
-        app:layout_constraintVertical_bias="0.111"
+        app:layout_constraintTop_toBottomOf="@+id/Email1"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="ContentDescription,TextFields" />
 
     <Button
@@ -62,7 +63,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.495"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/Password"
+    app:layout_constraintTop_toBottomOf="@+id/Password1"
     app:layout_constraintVertical_bias="1.0" />
 
     <Button
