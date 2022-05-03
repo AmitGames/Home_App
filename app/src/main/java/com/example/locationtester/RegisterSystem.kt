@@ -11,10 +11,14 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class RegisterSystem : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = "SignUp"
@@ -23,6 +27,9 @@ class RegisterSystem : AppCompatActivity() {
         findViewById<Button>(R.id.SignUp).setOnClickListener {
             signUp()
         }
+
+
+
 
     }
     public override fun onStart() {
@@ -60,4 +67,5 @@ class RegisterSystem : AppCompatActivity() {
             }
         }
     }
+
 }

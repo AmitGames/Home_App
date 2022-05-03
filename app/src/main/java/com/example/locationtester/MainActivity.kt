@@ -1,10 +1,14 @@
 package com.example.locationtester
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -23,13 +27,25 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import java.lang.reflect.Method
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var thread : Thread
+    private val runnable = Runnable(){
+        while(true){
+            GetLocation()
+            Thread.sleep(10000)
+        }
+
+    }
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private val firebaseDatabaseReference = FirebaseDatabase.getInstance("https://android-home-app-e721d-default-rtdb.europe-west1.firebasedatabase.app/")
     private lateinit var auth: FirebaseAuth
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +70,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val intent = Intent(this@MainActivity, NewHouseActivity::class.java)
             startActivity(intent)
         }
+        updateDatabaseInfo()
+        thread = Thread(runnable)
+        thread.start()
     }
+
 
 
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -105,7 +125,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     }
-    private fun GetLocation(){
+    private fun GetLocation (){
         val task = fusedLocationProviderClient.lastLocation
 
         if(ActivityCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -116,7 +136,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         task.addOnSuccessListener {
             if(it != null){
-                Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(baseContext,"${it.latitude}, ${it.longitude}",Toast.LENGTH_SHORT).show()
+                UpdateDatabaseLocation(it)
 
             }
         }
@@ -126,10 +147,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    private fun UpdateDatabaseLocation(it : Location){
+        val reference = firebaseDatabaseReference.reference
+        val UID = auth.currentUser?.uid.toString()
+        reference.child("Users").child(UID).child("CurrentLocation").setValue(mapOf("latitude" to it.latitude,
+        "longitude" to it.longitude))
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.log_out->logout()
         }
         return true
+    }
+    private fun updateDatabaseInfo(){
+        val reference = firebaseDatabaseReference.reference
+        val user = auth.currentUser
+        val UID = user?.uid.toString()
+        reference.child("Users").child(UID).child("display_name").setValue(auth.currentUser?.displayName.toString())
+        reference.child("Users").child(UID).child("homes").setValue(null)
+
     }
 }
