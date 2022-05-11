@@ -12,5 +12,7 @@
         android:textAlignment="textStart"
         android:textColor="@color/white"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_centerVertical="true"/>
+
 </RelativeLayout>

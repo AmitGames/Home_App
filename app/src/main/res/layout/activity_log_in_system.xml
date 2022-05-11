@@ -1,82 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LogInSystem">
+    android:orientation="vertical"
+    android:background="@color/design_default_color_background"
+    tools:context=".LoginFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:padding="24dp"
+        android:paddingTop="16dp"
+        android:layout_gravity="center_vertical">
 
-    <EditText
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/Email1"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
-        android:layout_marginBottom="502dp"
-        android:autofillHints=""
-        android:ems="10"
+        android:layout_margin="4dp"
         android:hint="@string/email"
-        android:inputType="text"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:ignore="TextFields" />
+        android:layout_gravity="center_horizontal"
+        app:errorEnabled="true">
 
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Email2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/Password1"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="432dp"
-        android:autoText="false"
-        android:autofillHints=""
-        android:contentDescription="@string/password"
-        android:ems="10"
+        android:layout_margin="4dp"
         android:hint="@string/password"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Email1"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="ContentDescription,TextFields" />
+        app:errorEnabled="true">
 
-    <Button
-    android:id="@+id/login"
-    android:layout_width="298dp"
-    android:layout_height="53dp"
-    android:layout_marginTop="70dp"
-    android:layout_marginBottom="306dp"
-    android:text="@string/login"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.495"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/Password1"
-    app:layout_constraintVertical_bias="1.0" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Password2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/register"
-        android:layout_width="298dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginBottom="252dp"
-        android:text="@string/signup"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/login_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/login"
+                tools:ignore="RtlHardcoded" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/register"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_toStartOf="@id/login_btn"
+                android:layout_toLeftOf="@id/login_btn"
+                android:text="@string/signup"
+                tools:ignore="RtlHardcoded" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>
