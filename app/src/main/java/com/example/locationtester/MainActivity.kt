@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -26,24 +27,18 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationHost{
 
-//    private lateinit var thread : Thread
-//    private val runnable = Runnable{
-//        while(true){
-//            GetLocation()
-//            Thread.sleep(10000)
-//
-//        }
-//
-//    }
+
 //    private lateinit var drawerLayout: DrawerLayout
 //    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-//    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val firebaseDatabaseReference = FirebaseDatabase.getInstance("https://android-home-app-e721d-default-rtdb.europe-west1.firebasedatabase.app/")
     private var auth = Firebase.auth
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_layout)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         if (auth?.currentUser == null) {
             supportFragmentManager
                 .beginTransaction()
@@ -66,14 +61,13 @@ class MainActivity : AppCompatActivity(), NavigationHost{
 //        val headerView = navigationView.getHeaderView(0)
 //        val name = headerView.findViewById<TextView>(R.id.display_name_text)
 //        name.text = "Welcome: ${auth.currentUser?.displayName.toString()}"
-//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
 //        findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.AddHouseBtn).setOnClickListener {
 //            val intent = Intent(this@MainActivity, NewHouseActivity::class.java)
 //            startActivity(intent)
 //        }
 //        updateDatabaseInfo()
-//        thread = Thread(runnable)
-//        thread.start()
+
 //
 //    }
     override fun navigateTo(fragment: Fragment, addToBackstack: Boolean) {
@@ -86,6 +80,23 @@ class MainActivity : AppCompatActivity(), NavigationHost{
         }
 
         transaction.commit()
+    }
+    fun navigateToWithargs(fragment: Fragment, addToBackstack: Boolean, input : Any) {
+        val bundle = Bundle()
+        bundle.putString("data", input.toString())
+        fragment.arguments = bundle
+        val transaction = supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, fragment)
+
+        if (addToBackstack) {
+            transaction.addToBackStack(null)
+        }
+
+        transaction.commit()
+    }
+    fun getTextView() : TextView{
+        return TextView(this)
     }
 //
 //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -118,43 +129,71 @@ class MainActivity : AppCompatActivity(), NavigationHost{
 //
 //        }
 //    }
-//    private fun GetLocation (){
-//        val task = fusedLocationProviderClient.lastLocation
+@SuppressLint("MissingPermission")
+fun GetLocation (){
+
+
+    if(ActivityCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+    {
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), 101)
+        return
+    }
+    val task = fusedLocationProviderClient.lastLocation
+    task.addOnSuccessListener {
+        if(it != null){
+            //Toast.makeText(baseContext,"${it.latitude}, ${it.longitude}",Toast.LENGTH_SHORT).show()
+            UpdateDatabaseLocation(it)
+
+        }
+    }
+
+}
+    @SuppressLint("MissingPermission")
+    fun getLocationValue(o: Map<*, *>, myHomesFragment: MyHomesFragment, home : String){
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                101
+            )
+            return
+        }
+        val task = fusedLocationProviderClient.lastLocation
+        task.addOnSuccessListener {
+            if (it != null) {
+                //Toast.makeText(baseContext,"${it.latitude}, ${it.longitude}",Toast.LENGTH_SHORT).show()
+                myHomesFragment.updateUI(o, LatLng(it.latitude.toDouble(), it.longitude.toDouble()), home)
+
+            }
+        }
+    }
+    private fun UpdateDatabaseLocation(it : Location){
+        val reference = firebaseDatabaseReference.reference
+        val UID = auth.currentUser?.uid.toString()
+        reference.child("Users").child(UID).child("CurrentLocation").setValue(mapOf("latitude" to it.latitude,
+            "longitude" to it.longitude))
+    }
+
 //
-//        if(ActivityCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-//            && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-//        {
-//            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 101)
-//            return
-//        }
-//        task.addOnSuccessListener {
-//            if(it != null){
-//                //Toast.makeText(baseContext,"${it.latitude}, ${it.longitude}",Toast.LENGTH_SHORT).show()
-//                UpdateDatabaseLocation(it)
-//
-//            }
-//        }
-//    }
-//
-//    private fun UpdateDatabaseLocation(it : Location){
-//        val reference = firebaseDatabaseReference.reference
-//        val UID = auth.currentUser?.uid.toString()
-//        reference.child("Users").child(UID).child("CurrentLocation").setValue(mapOf("latitude" to it.latitude,
-//        "longitude" to it.longitude))
-//    }
+
 ////    override fun onNavigationItemSelected(item: MenuItem): Boolean {
 ////        when(item.itemId){
 ////            R.id.log_out->logout()
 ////        }
 ////        return true
 ////    }
-//    private fun updateDatabaseInfo(){
-//        val reference = firebaseDatabaseReference.reference
-//        val user = auth.currentUser
-//        val UID = user?.uid.toString()
-//        reference.child("Users").child(UID).child("display_name").setValue(auth.currentUser?.displayName.toString())
-//        reference.child("Users").child(UID).child("homes").setValue(null)
-//
-//    }
+
 
 }
