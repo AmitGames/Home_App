@@ -3,13 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeSettings">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/test1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:id="@+id/linear1"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:textAlignment="center"
+        android:padding="24dp"
+        android:paddingTop="16dp"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="24dp"
+        android:id="@+id/buttn_layout">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_button"
+            android:text="Add Member"
+            app:icon="@drawable/ic_add_circle_fill0_wght400_grad0_opsz24"
+            />
+    </RelativeLayout>
 </FrameLayout>

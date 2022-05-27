@@ -6,6 +6,8 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -39,7 +42,7 @@ class MainActivity : AppCompatActivity(), NavigationHost{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_layout)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        if (auth?.currentUser == null) {
+        if (auth.currentUser == null) {
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.container, LoginFragment())
@@ -97,6 +100,12 @@ class MainActivity : AppCompatActivity(), NavigationHost{
     }
     fun getTextView() : TextView{
         return TextView(this)
+    }
+    fun getButtonView() : MaterialButton{
+        return MaterialButton(this)
+    }
+    fun getLinearView() : LinearLayout{
+        return LinearLayout(this)
     }
 //
 //    override fun onOptionsItemSelected(item: MenuItem): Boolean {

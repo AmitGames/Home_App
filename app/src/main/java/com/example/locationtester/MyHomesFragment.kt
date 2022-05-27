@@ -172,7 +172,7 @@ class MyHomesFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
         val distance = 3963.0 * Math.acos((Math.sin(lat2) * Math.sin(lat3)) + Math.cos(lat2)*Math.cos(lat3)*Math.cos(lon3 - lon2)) * 1.609344
 
 
-        text.setText("\n Home Name: ${o["home_name"].toString()}\nDistance From Home: ${distance.toInt()} KM")
+        text.setText("\n Location Name: ${o["home_name"].toString()}\nDistance From Location: ${distance.toInt()} KM")
         text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
         text.setOnClickListener{
             (activity as MainActivity).navigateToWithargs(HomeSettings(), false, home)
