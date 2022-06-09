@@ -105,7 +105,10 @@ class MyHomesFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
                 logout()
                 flag = false
             }
-            R.id.create_new_btn->{(activity as MainActivity).navigateTo(NewHouseFragment(), false)
+            R.id.create_new_btn->{(activity as MainActivity).navigateTo(NewHouseFragment(), true)
+            flag = false
+            }
+            R.id.account_btn->{(activity as MainActivity).navigateTo(MyAcount(), true)
             flag = false
             }
         }
@@ -175,7 +178,7 @@ class MyHomesFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
         text.setText("\n Location Name: ${o["home_name"].toString()}\nDistance From Location: ${distance.toInt()} KM")
         text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
         text.setOnClickListener{
-            (activity as MainActivity).navigateToWithargs(HomeSettings(), false, home)
+            (activity as MainActivity).navigateToWithargs(HomeSettings(), true, home)
             flag = false
         }
 

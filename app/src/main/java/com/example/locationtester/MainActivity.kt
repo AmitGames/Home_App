@@ -1,31 +1,28 @@
 package com.example.locationtester
 
+import android.R.attr.label
+import android.R.attr.text
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import java.util.*
-
-
 
 
 class MainActivity : AppCompatActivity(), NavigationHost{
@@ -106,6 +103,18 @@ class MainActivity : AppCompatActivity(), NavigationHost{
     }
     fun getLinearView() : LinearLayout{
         return LinearLayout(this)
+    }
+    fun CopyUID() : Boolean{
+        val uid = Firebase.auth.currentUser?.uid as String
+        val clipboard: ClipboardManager =
+            getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Copied Text", uid)
+        clipboard.setPrimaryClip(clip)
+        return true
+    }
+    fun sendToastMessage(input : String) : Boolean{
+        Toast.makeText(this,input, Toast.LENGTH_LONG).show()
+        return true
     }
 //
 //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -194,6 +203,7 @@ fun GetLocation (){
         reference.child("Users").child(UID).child("CurrentLocation").setValue(mapOf("latitude" to it.latitude,
             "longitude" to it.longitude))
     }
+
 
 //
 

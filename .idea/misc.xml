@@ -7,6 +7,7 @@
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/drawable/ic_account_circle_fill0_wght400_grad0_opsz24.xml" value="0.1285" />
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/drawable/ic_add_circle_fill0_wght400_grad0_opsz24.xml" value="0.1285" />
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1285" />
+        <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1485" />
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/drawable/ic_logout_fill0_wght400_grad0_opsz24.xml" value="0.1285" />
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/drawable/ic_menu_fill0_wght400_grad0_opsz24.xml" value="0.1285" />
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/drawable/ic_search_fill0_wght400_grad0_opsz24.xml" value="0.1285" />
@@ -17,6 +18,7 @@
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/layout/activity_register_system.xml" value="0.25" />
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/layout/fragment_add_member.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/layout/fragment_home_settings.xml" value="0.2975630611372381" />
+        <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/layout/fragment_my_acount.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/layout/main_layout.xml" value="0.15220179563916203" />
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/layout/map_picker_fragment.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/amfr_/AndroidStudioProjects/LocationTester/app/src/main/res/layout/navigation_header.xml" value="0.1" />
