@@ -15,7 +15,11 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.locationtester.databinding.ActivityMainBinding
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
@@ -36,6 +40,7 @@ class HomeSettings : Fragment() {
     private lateinit var input : String
     private var auth = Firebase.auth
     private val currentuser = auth.currentUser?.uid
+    private lateinit var Location : LatLng
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,9 +86,15 @@ class HomeSettings : Fragment() {
                 o = it.value as Map<*, *>
                 Log.w(TAG, "$o")
                 updateUI(o, home_name, isUserAdmin)
+                updateMap(o["home_location"] as Map<*, *>)
 
             }
     }
+    }
+    private fun updateMap(location : Map<*,*>){
+        Location = LatLng(location["latitude"] as Double, location["longitude"] as Double)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
     }
 
     @SuppressLint("SetTextI18n")
@@ -192,7 +203,12 @@ class HomeSettings : Fragment() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         text2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-        text2.setText("   Distance From Location: ${calculateDistance(location1, location2).toInt()} KM")
+        val distance = calculateDistance(location1, location2)
+        if(distance < 1){
+            text2.setText("   Distance From Location: ${(distance * 100).toInt() * 10} M")
+        }else {
+            text2.setText("   Distance From Location: ${distance.toInt()} KM")
+        }
         val linear = view?.findViewById<LinearLayout>(R.id.linear1)
         linear?.addView(text2)
     }
@@ -256,6 +272,18 @@ class HomeSettings : Fragment() {
 
 
     }
+    private val callback = OnMapReadyCallback { googleMap ->
+
+
+        //val sydney = LatLng(-34.0, 151.0)
+        val map = googleMap
+        //googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        googleMap.addMarker(MarkerOptions().position(Location).title("Home"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Location, 12f))
+
+
+    }
+
 /**
  * END OF SECTION
  * Running on the start of the fragment
@@ -287,7 +315,7 @@ class HomeSettings : Fragment() {
         (activity as MainActivity).navigateToWithargs(HomeSettings(), false, input)
     }
     private fun addMember(home : String){
-        (activity as MainActivity).navigateToWithargs(AddMemberFragment(), false, home)
+        (activity as MainActivity).navigateToWithargs(AddMemberFragment(), true, home)
     }
 /**
  * END OF SECTION
